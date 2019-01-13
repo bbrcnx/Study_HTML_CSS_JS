@@ -1,0 +1,85 @@
+
+body {
+    font-family:  Arial, Helvetica, serif;
+    font-size: 14px;
+}
+
+h1 {
+    width: 100%;
+    font-size: 1.75em;
+    text-align: center;
+}
+
+
+.col_1, .col_2, .col_3 {
+    overflow: auto;
+    margin: 10px;
+    padding: 0px 10px 10px 10px;
+    border: 1px solid black;
+}
+
+.col_1 {
+    background-color: #ffd2a8;
+}
+.col_2 {
+    background-color: #d7ffa8;
+}
+.col_3 {
+    background-color: #ffa8da;
+}
+
+.title_1, .title_2, .title_3{
+    margin: 0px;
+    padding: 2px 20px 2px 20px;
+    float: right;
+    border: 1px solid black;
+}
+
+.title_1 {
+    background-color: #bca46b;
+}
+.title_2 {
+    background-color: #8cbc6b;
+}
+.title_3 {
+    background-color: #6bbcbc;
+}
+
+.menu_1, .menu_2, .menu_3 {
+    float: left;
+}
+
+/**** Desktop ****/
+@media (min-width: 992px) {
+    .outer_1, .outer_2, .outer_3 {
+        position: relative;
+        width: 33.3%;
+        float: left;
+        box-sizing: border-box;
+    }
+}
+
+/**** Tablet ****/
+@media (min-width: 768px) and (max-width: 991px) {
+    .outer_1, .outer_2 {
+        width: 50%;
+        float: left;
+    }
+    .outer_3 {
+        width: 100%;
+        float: left;
+        clear: left;
+    }
+   
+}
+
+
+/**** Mobile ****/
+@media (max-width: 767px) {
+    .col_1, .col_2, .col_3 {
+        width: 100%;
+        float: left;
+    }
+
+
+}
