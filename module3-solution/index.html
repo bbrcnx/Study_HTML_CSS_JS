@@ -51,30 +51,6 @@
       <p>
         William Kent, "A Simple Guide to Five Normal Forms in Relational Database Theory", Communications of the ACM 26(2), Feb. 1983, 120-125. Also IBM Technical Report TR03.159, Aug. 1981. Also presented at SHARE 62, March 1984, Anaheim, California. Also in A.R. Hurson, L.L. Miller and S.H. Pakzad, Parallel Architectures for Database Systems, IEEE Computer Society Press, 1989. [12 pp]
 
-        Copyright 1996 by the Association for Computing Machinery, Inc. Permission to make digital or hard copies of part or all of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, to republish, to post on servers, or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from Publications Dept, ACM Inc., fax +1 (212) 869-0481, or permissions@acm.org.
-
-        A Simple Guide to Five Normal Forms in Relational Database Theory
-        William Kent
-        Sept 1982
-
-
-        > 1 INTRODUCTION . . . 2 
-        > 2 FIRST NORMAL FORM . . . 2 
-        > 3 SECOND AND THIRD NORMAL FORMS . . . 2 
-        >> 3.1 Second Normal Form . . . 2 
-        >> 3.2 Third Normal Form . . . 3 
-        >> 3.3 Functional Dependencies . . . 4 
-        > 4 FOURTH AND FIFTH NORMAL FORMS . . . 5 
-        >> 4.1 Fourth Normal Form . . . 6 
-        >>> 4.1.1 Independence . . . 8 
-        >>> 4.1.2 Multivalued Dependencies . . . 9 
-        >> 4.2 Fifth Normal Form . . . 9 
-        > 5 UNAVOIDABLE REDUNDANCIES . . . 12 
-        > 6 INTER-RECORD REDUNDANCY . . . 13 
-        > 7 CONCLUSION . . . 13 
-        > 8 ACKNOWLEDGMENT . . . 14 
-        > 9 REFERENCES . . . 14
-        1 INTRODUCTION
         The normal forms defined in relational database theory represent guidelines for record design. The guidelines corresponding to first through fifth normal forms are presented here, in terms that do not require an understanding of relational theory. The design guidelines are meaningful even if one is not using a relational database system. We present the guidelines without referring to the concepts of the relational model in order to emphasize their generality, and also to make them easier to understand. Our presentation conveys an intuitive sense of the intended constraints on record design, although in its informality it may be imprecise in some technical details. A comprehensive treatment of the subject is provided by Date [4].
 
         The normalization rules are designed to prevent update anomalies and data inconsistencies. With respect to performance tradeoffs, these guidelines are biased toward the assumption that all non-key fields will be updated frequently. They tend to penalize retrieval, since data which may have been retrievable from one record in an unnormalized design may have to be retrieved from several records in the normalized form. There is no obligation to fully normalize all records when actual performance requirements are taken into account.
@@ -90,7 +66,12 @@
         Second and third normal forms [2, 3, 7] deal with the relationship between non-key and key fields.
 
         Under second and third normal forms, a non-key field must provide a fact about the key, us the whole key, and nothing but the key. In addition, the record must satisfy first normal form.
+      </p>
+    </div>
 
+    <div class="menu-detail">
+      <h3 class="text-center">Beef</h3>
+      <p>
         We deal now only with "single-valued" facts. The fact could be a one-to-many relationship, such as the department of an employee, or a one-to-one relationship, such as the spouse of an employee. Thus the phrase "Y is a fact about X" signifies a one-to-one or one-to-many relationship between Y and X. In the general case, Y might consist of one or more fields, and so might X. In the following example, QUANTITY is a fact about the combination of PART and WAREHOUSE.
 
         3.1 Second Normal Form
@@ -102,12 +83,7 @@
         If the address of the warehouse changes, every record referring to a part stored in that warehouse must be updated.
         Because of the redundancy, the data might become inconsistent, with different records showing different addresses for the same warehouse.
         If at some point in time there are no parts stored in the warehouse, there may be no record in which to keep the warehouse's address.
-        To satisfy second normal form, the record shown above should be decomposed into (replaced by) the two records:
-
-        When a data design is changed in this way, replacing unnormalized records with normalized records, the process is referred to as normalization. The term "normalization" is sometimes used relative to a particular normal form. Thus a set of records may be normalized with respect to second normal form but not with respect to third.
-
-        The normalized design enhances the integrity of the data, by minimizing redundancy and inconsistency, but at some possible performance cost for certain retrieval applications. Consider an application that wants the addresses of all warehouses stocking a certain part. In the unnormalized form, the application searches one record type. With the normalized design, the application has to search two record types, and connect the appropriate pairs.
-
+        To satisfy second normal form, the record shown above should be decomposed
         3.2 Third Normal Form
         Third normal form is violated when a non-key field is a fact about another non-key field, as in
 
@@ -123,7 +99,12 @@
 
         3.3 Functional Dependencies
         In relational database theory, second and third normal forms are defined in terms of functional dependencies, which correspond approximately to our single-valued facts. A field Y is "functionally dependent" on a field (or fields) X if it is invalid to have two records with the same X-value but different Y-values. That is, a given X-value must always occur with the same Y-value. When X is a key, then all fields are by definition functionally dependent on X in a trivial way, since there can't be two records having the same X value.
+      </p>
+    </div>
 
+    <div class="menu-detail">
+      <h3 class="text-center">Sushi</h3>
+      <p>
         There is a slight technical difference between functional dependencies and single-valued facts as we have presented them. Functional dependencies only exist when the things involved have unique and singular identifiers (representations). For example, suppose a person's address is a single-valued fact, i.e., a person has only one address. If we don't provide unique identifiers for people, then there will not be a functional dependency in the data:        Although each person has a unique address, a given name can appear with several different addresses. Hence we do not have a functional dependency corresponding to our single-valued fact.
 
         Similarly, the address has to be spelled identically in each occurrence in order to have a functional dependency. In the following case the same person appears to be living at two different addresses, again precluding a functional dependency.
@@ -137,17 +118,6 @@
         4 FOURTH AND FIFTH NORMAL FORMS
         Fourth [5] and fifth [6] normal forms deal with multi-valued facts. The multi-valued fact may correspond to a many-to-many relationship, as with employees and skills, or to a many-to-one relationship, as with the children of an employee (assuming only one parent is an employee). By "many-to-many" we mean that an employee may have several skills, and a skill may belong to several employees.
 
-        Note that we look at the many-to-one relationship between children and fathers as a single-valued fact about a child but a multi-valued fact about a father.
-
-        In a sense, fourth and fifth normal forms are also about composite keys. These normal forms attempt to minimize the number of fields involved in a composite key, as suggested by the examples to follow.
-
-        4.1 Fourth Normal Form
-        Under fourth normal form, a record type should not contain two or more independent multi-valued facts about an entity. In addition, the record must satisfy third normal form.
-
-        The term "independent" will be discussed after considering an example.
-
-        Consider employees, skills, and languages, where an employee may have several skills and several languages. We have here two many-to-many relationships, one between employees and skills, and one between employees and languages. Under fourth normal form, these two relationships should not be represented in a single record such as
-
 
         Instead, they should be represented in the two records
 
@@ -155,48 +125,13 @@
 
         The main problem with violating fourth normal form is that it leads to uncertainties in the maintenance policies. Several policies are possible for maintaining two independent multi-valued facts in one record:
 
-        (1) A disjoint format, in which a record contains either a skill or a language, but not both:
-
-        This is not much different from maintaining two separate record types. (We note in passing that such a format also leads to ambiguities regarding the meanings of blank fields. A blank SKILL could mean the person has no skill, or the field is not applicable to this employee, or the data is unknown, or, as in this case, the data may be found in another record.)
-
-        (2) A random mix, with three variations:
-
-        (a) Minimal number of records, with repetitions:
-        (b) Minimal number of records, with null values:
-        (c) Unrestricted:
-        (3) A "cross-product" form, where for each employee, there must be a record for every possible pairing of one of his skills with one of his languages:
-        -------------------------------
+        (1) A disjoint format, in which a record contains either a skill or a
         Other problems caused by violating fourth normal form are similar in spirit to those mentioned earlier for violations of second or third normal form. They take different variations depending on the chosen maintenance policy:
 
         If there are repetitions, then updates have to be done in multiple records, and they could become inconsistent.
-        Insertion of a new skill may involve looking for a record with a blank skill, or inserting a new record with a possibly blank language, or inserting multiple records pairing the new skill with some or all of the languages.
-        Deletion of a skill may involve blanking out the skill field in one or more records (perhaps with a check that this doesn't leave two records with the same language and a blank skill), or deleting one or more records, coupled with a check that the last mention of some language hasn't also been deleted.
-        Fourth normal form minimizes such update problems.
-
-        4.1.1 Independence
-        We mentioned independent multi-valued facts earlier, and we now illustrate what we mean in terms of the example. The two many-to-many relationships, employee:skill and employee:language, are "independent" in that there is no direct connection between skills and languages. There is only an indirect connection because they belong to some common employee. That is, it does not matter which skill is paired with which language in a record; the pairing does not convey any information. That's precisely why all the maintenance policies mentioned earlier can be allowed.
-
-        In contrast, suppose that an employee could only exercise certain skills in certain languages. Perhaps Smith can cook French cuisine only, but can type in French, German, and Greek. Then the pairings of skills and languages becomes meaningful, and there is no longer an ambiguity of maintenance policies. In the present case, only the following form is correct:
-        Thus the employee:skill and employee:language relationships are no longer independent. These records do not violate fourth normal form. When there is an interdependence among the relationships, then it is acceptable to represent them in a single record.
-
-        4.1.2 Multivalued Dependencies
-        For readers interested in pursuing the technical background of fourth normal form a bit further, we mention that fourth normal form is defined in terms of multivalued dependencies, which correspond to our independent multi-valued facts. Multivalued dependencies, in turn, are defined essentially as relationships which accept the "cross-product" maintenance policy mentioned above. That is, for our example, every one of an employee's skills must appear paired with every one of his languages. It may or may not be obvious to the reader that this is equivalent to our notion of independence: since every possible pairing must be present, there is no "information" in the pairings. Such pairings convey information only if some of them can be absent, that is, only if it is possible that some employee cannot perform some skill in some language. If all pairings are always present, then the relationships are really independent.
-
-        We should also point out that multivalued dependencies and fourth normal form apply as well to relationships involving more than two fields. For example, suppose we extend the earlier example to include projects, in the following sense:
-
-        An employee uses certain skills on certain projects.
-        An employee uses certain languages on certain projects.
-        If there is no direct connection between the skills and languages that an employee uses on a project, then we could treat this as two independent many-to-many relationships of the form EP:S and EP:L, where "EP" represents a combination of an employee with a project. A record including employee, project, skill, and language would violate fourth normal form. Two records, containing fields E,P,S and E,P,L, respectively, would satisfy fourth normal form.
-
-        4.2 Fifth Normal Form
-        Fifth normal form deals with cases where information can be reconstructed from smaller pieces of information that can be maintained with less redundancy. Second, third, and fourth normal forms also serve this purpose, but fifth normal form generalizes to cases not covered by the others.
-
-        We will not attempt a comprehensive exposition of fifth normal form, but illustrate the central concept with a commonly used example, namely one involving agents, companies, and products. If agents represent companies, companies make products, and agents sell products, then we might want to keep a record of which agent sells which product for which company. This information could be kept in one record type with three fields:
-    
+        Insertion of a new skill may involve looking for a record with a blank skill, or inserting a new record with a possibly blank language, or inserting multiple records pairing the new skill with some or all of the 
       </p>
     </div>
-
-
   </div>
 <!--   <body>
   <header>
